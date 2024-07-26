@@ -181,3 +181,10 @@ footer {
     opacity: 1;
   }
 }
+
+
+@property --num {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
