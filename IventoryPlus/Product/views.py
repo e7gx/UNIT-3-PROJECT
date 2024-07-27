@@ -1,3 +1,4 @@
+import csv
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
@@ -6,8 +7,10 @@ from Categories.models import Category
 from .models import Product
 from .forms import ProductForm
 from django.contrib import messages
-
-
+from tempfile import NamedTemporaryFile
+from openpyxl import Workbook
+from datetime import datetime
+from Notifications.utils import send_alerts
 
 
 def home(request:HttpResponse):
@@ -50,7 +53,6 @@ def product_detail(request:HttpResponse, pk):
     return render(request, 'Product/product_detail.html', {'product': product})
 
 
-
 def product_create(request:HttpResponse):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -59,12 +61,10 @@ def product_create(request:HttpResponse):
             return redirect('Product:thanks')
     else:
         form = ProductForm()
-    category = Category.objects.all()
+    categories = Category.objects.all()
     suppliers = Supplier.objects.all()
     
-    return render(request, 'Product/add_product.html', {'form': form ,"category":category, "suppliers":suppliers})
-
-
+    return render(request, 'Product/add_product.html', {'form': form, 'categories': categories, 'suppliers': suppliers, 'product': None})
 
 def product_update(request:HttpResponse, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -72,6 +72,7 @@ def product_update(request:HttpResponse, pk):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
+            send_alerts()
             return redirect('Product:thanks')
         else:
             messages.error(request, 'Form is not valid')
@@ -114,3 +115,148 @@ def product_search(request):
     products = paginator.get_page(page_number)
 
     return render(request, 'Product/search_product.html', {'products': products, 'count': count, 'query': query})
+
+
+
+
+def stock_status(request):
+    products = Product.objects.all()
+    return render(request, 'Product/stock_status.html', {'products': products})
+
+
+def stock_status(request):
+    products = Product.objects.all()
+    return render(request, 'Product/stock_status.html', {'products': products})
+
+def update_stock(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        stock_quantity = request.POST.get('stock_quantity')
+        if stock_quantity:
+            try:
+                product.stock_quantity = int(stock_quantity)
+                product.save()
+                send_alerts()  # Send alerts after updating stock quantity
+                return redirect('Product:stock_status')  # Adjust this to your actual URL pattern name
+            except ValueError:
+                # Handle the case where stock_quantity is not a valid integer
+                print("Invalid stock quantity provided.")
+        else:
+            print("No stock quantity provided.")
+    return render(request, 'Product/update_stock.html', {'product': product})
+
+
+
+def export_products_csv(request:HttpResponse):
+    # Create the HttpResponse object with CSV content type
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="products_and_suppliers.csv"'
+
+    # Create a CSV writer
+    writer = csv.writer(response)
+    
+    # Write the header row
+    writer.writerow([
+        'Product ID', 'Product Name', 'Product Image URL', 'Product Description', 'Product Price',
+        'Product Stock Quantity', 'Product Category', 'Product Suppliers', 'Product Created At',
+        'Supplier ID', 'Supplier Name', 'Supplier Email', 'Supplier Logo URL', 'Supplier Phone Number',
+        'Supplier Website', 'Supplier Contact Person Name', 'Supplier Contact Person Job Title',
+        'Supplier Country', 'Supplier City', 'Supplier Active', 'Supplier Supplied Products',
+ 
+    ])
+
+    # Write data rows
+    products = Product.objects.all()
+    for product in products:
+        for supplier in product.suppliers.all():
+            writer.writerow([
+                product.id,
+                product.name,
+                product.product_image.url,
+                product.description,
+                product.price,
+                product.stock_quantity,
+                product.category.name,
+                ", ".join(supplier.name for supplier in product.suppliers.all()),
+                product.created_at,
+                supplier.id,
+                supplier.name,
+                supplier.email,
+                supplier.logo.url,
+                supplier.phone_number,
+                supplier.website,
+                supplier.contact_person_name,
+                supplier.contact_person_job_title,
+                supplier.country,
+                supplier.city,
+                supplier.active,
+                supplier.supplied_products,
+            ])
+    
+    return response
+
+
+
+
+
+def export_products_excel(request):
+    # Create an in-memory workbook
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.title = 'Products and Suppliers'
+
+    # Write the header row
+    headers = [
+        'Product ID', 'Product Name', 'Product Image URL', 'Product Description', 'Product Price',
+        'Product Stock Quantity', 'Product Category', 'Product Suppliers', 'Product Created At',
+        'Supplier ID', 'Supplier Name', 'Supplier Email', 'Supplier Logo URL', 'Supplier Phone Number',
+        'Supplier Website', 'Supplier Contact Person Name', 'Supplier Contact Person Job Title',
+        'Supplier Country', 'Supplier City', 'Supplier Active', 'Supplier Supplied Products',
+        'Supplier Services Offered'
+    ]
+    worksheet.append(headers)
+
+    # Write data rows
+    products = Product.objects.all()
+    for product in products:
+        for supplier in product.suppliers.all():
+            product_created_at = product.created_at
+            if isinstance(product_created_at, datetime):
+                product_created_at = product_created_at.replace(tzinfo=None)
+            
+            row = [
+                product.id,
+                product.name,
+                product.product_image.url,
+                product.description,
+                product.price,
+                product.stock_quantity,
+                product.category.name,
+                ", ".join(supplier.name for supplier in product.suppliers.all()),
+                product_created_at,
+                supplier.id,
+                supplier.name,
+                supplier.email,
+                supplier.logo.url,
+                supplier.phone_number,
+                supplier.website,
+                supplier.contact_person_name,
+                supplier.contact_person_job_title,
+                supplier.country,
+                supplier.city,
+                supplier.active,
+                supplier.supplied_products,
+                supplier.services_offered
+            ]
+            worksheet.append(row)
+
+    # Save workbook to a temporary file
+    with NamedTemporaryFile() as tmp:
+        workbook.save(tmp.name)
+        tmp.seek(0)  # Move to the start of the file
+        output = tmp.read()
+
+    # Create response with the file content
+    response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="products_and_suppliers.xlsx"'
+    return response

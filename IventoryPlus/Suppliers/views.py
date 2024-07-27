@@ -11,7 +11,10 @@ def supplier_list(request):
 
 def supplier_detail(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
+    print(supplier.services_offered)
+
     return render(request, 'suppliers/supplier_detail.html', {'supplier': supplier})
+
 
 
 
@@ -20,7 +23,7 @@ def add_supplier(request):
         form = SupplierForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('Suppliers:supplier_list')
+            return redirect('Product:thanks')
     else:
         form = SupplierForm()
 
@@ -29,6 +32,8 @@ def add_supplier(request):
         'product_choices': Supplier.PRODUCT_CHOICES,
         'rating_choices': Supplier.RATING_CHOICES,
         'service_choices': Supplier.SERVICE_CHOICES,
+        'policy_choices': Supplier.RETURN_POLICY_CHOICES,
+
     }
     return render(request, 'suppliers/add_supplier.html', context)
 
@@ -43,7 +48,6 @@ def update_supplier(request, pk):
             form.save()
             return redirect('Suppliers:supplier_list')
     else:
-        # Bind the form with the existing supplier instance
         form = SupplierForm(instance=supplier)
 
     context = {
@@ -51,6 +55,7 @@ def update_supplier(request, pk):
         'product_choices': Supplier.PRODUCT_CHOICES,
         'rating_choices': Supplier.RATING_CHOICES,
         'service_choices': Supplier.SERVICE_CHOICES,
+        'policy_choices': Supplier.RETURN_POLICY_CHOICES,
         'supplier': supplier,
     }
     return render(request, 'Suppliers/update_supplier.html', context)

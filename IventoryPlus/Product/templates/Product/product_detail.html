@@ -22,8 +22,15 @@
             <p class="pt-4 pb-2 text-black"><strong>Description :</strong> {{ product.description }}</p>
             <p class="pt-4 pb-2 text-black"><strong>Price :</strong> {{ product.price }} $</p>
             <p class="pt-4 pb-2 text-black"><strong>Category:</strong> {{ product.category }}</p>
-            <p class="pt-4 pb-2 text-black"><strong>Suppliers :</strong> {{ product.suppliers }}</p>
+            <p class="pt-4 pb-2 text-black"><strong>Suppliers :</strong> 
+                {% for supplier in product.suppliers.all %}
+                    <a href="{% url 'Suppliers:supplier_detail' supplier.id %}" class="text-blue-500 hover:underline">{{ supplier.name }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>          
             <p class="pt-4 pb-2 text-black"><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</p>
+            <p class="pt-4 pb-2 text-black"><strong>Expiration Date:</strong> {{ product.expiration_date }}</p>
+            
             <p class="pt-4 pb-8 text-gray-400 text-s">Last Update: {{ product.created_at }}</p>
             <a href="{% url 'Product:product_update' product.id %}"
                 class="bg-teal-400 text-white py-2 px-12 rounded-lg mt-4">Edit</a>

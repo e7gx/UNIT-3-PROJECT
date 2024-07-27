@@ -1,22 +1,17 @@
 {% extends "Product/base.html" %}
 {% load static %}
 
-{% block title %} Products {% endblock title %}
+{% block title %}Products{% endblock title %}
 {% block content %}
 
+<script>
+    AOS.init();
+</script>
+<div class="content-home-padding pr-16">
+    <h1 class="bold-font-prop tilt-in-fwd-bl text-blue-800">Product List</h1>
 
-
-
-
-    <script>
-        AOS.init();
-    </script>
-    <div class="content-home-padding">
-        
-        <h1 class="bold-font-prop tilt-in-fwd-bl text-blue-800"> Product Lists</h1>
-
-
-        <form method="GET" action="" class="m-4">
+    <div class="mb-8 flex justify-between items-center">
+        <form method="GET" action="" class="m-4 flex items-center">
             <img src="{% static 'images/filter.png' %}" class="h-[20px] inline-flex justify-center mr-4" alt="Filter">
             <label for="category" class="mr-2">Category:</label>
             <select name="category" id="category" class="mr-4">
@@ -27,45 +22,52 @@
                 </option>
                 {% endfor %}
             </select>
-
-            <button type="submit" class="h-[25px] bg-blue-800 rounded-xl px-16 text-white font-bold">
+            
+            <button type="submit" class="h-[25px] bg-blue-800 rounded-xl px-8 text-white font-bold">
                 Apply filter <img src="{% static 'images/done.png' %}" class="h-[20px] inline-flex justify-center" alt="Filter">
             </button>
         </form>
-
-
-        <div class="card-grid" >
-            {% for product in products %}
-            <div class="relative flex flex-col mt-6 bg-white shadow-md bg-clip-border rounded-xl w-96 overflow-hidden">
-                <img src="{{ product.product_image.url }}" alt="image" class="w-full h-56 object-cover rounded-t-xl" />
-                <div class="pl-6 pr-6 p-2">
-                    <p class="block font-sans text-base antialiased font-extrabold leading-relaxed text-inherit hover:text-teal-500">
-                        <a href="{% url 'Product:product_detail' product.pk %}">{{ product.name }}</a>
-                    </p>
-                </div>
-                <div class="pl-6 pr-6 p-1">
-                    <p class="block font-sans text-base antialiased font-medium leading-relaxed text-inherit">
-                        {{ product.category }}
-                    </p>
-                </div>
-
-                <div class="pl-6 pr-6 p-1">
-                    <p class="block text-blue-500 font-medium font-sans text-base antialiased leading-relaxed">
-                        {{product.category}}        
-                    </p>
-                </div>
-
-                <div class="pl-6 pr-6 p-1">
-                    <p class="block text-red-500 font-medium font-sans text-base antialiased leading-relaxed">
-                        {{product.price}}        
-                    </p>
-                </div>
-
-            </div>
-            {% endfor %}
+        <div class="justify-end items-end pr-16">
+            <a href="{% url 'Product:product_create' %}" class="py-2 px-6 bg-blue-800 hover:bg-blue-600 text-sm text-white font-bold rounded-lg transition duration-200">Add Product</a>
+            <a href="{% url 'Product:export_products_csv' %}" class="py-2 px-6 bg-teal-600 hover:bg-teal-600 text-sm text-white font-bold rounded-lg transition duration-200">Export to CSV</a>
+            <a href="{% url 'Product:export_products_excel' %}" class="py-2 px-6 bg-green-600 hover:bg-green-600 text-sm text-white font-bold rounded-lg transition duration-200">
+                Export To Excel
+            </a>
+            
         </div>
+    </div>
 
-    <!-- Pagination Controls -->
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 bg-white">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Image</th>
+                    <th scope="col" class="px-6 py-3">Name</th>
+                    <th scope="col" class="px-6 py-3">Category</th>
+                    <th scope="col" class="px-6 py-3">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4">
+                        <img src="{{ product.product_image.url }}" alt="image" class="w-20 h-20 object-cover rounded-xl"/>
+                    </td>
+                    <td class="px-6 py-4 font-medium text-gray-900">
+                        <a href="{% url 'Product:product_detail' product.pk %}">{{ product.name }}</a>
+                    </td>
+                    <td class="px-6 py-4">{{ product.category }}</td>
+                    <td class="px-6 py-4 text-red-500">{{ product.price }} $</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center text-gray-500">No products found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <div class="flex justify-center mt-8">
         <div class="flex items-center justify-center mt-8 space-x-2">
             {% if products.has_previous %}
@@ -80,11 +82,6 @@
                 <a href="?page={{ products.paginator.num_pages }}&category={{ request.GET.category }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md transition duration-300 ease-in-out transform hover:bg-blue-600 hover:scale-105">Last &raquo;</a>
             {% endif %}
         </div>
-        
     </div>
 </div>
-    </div>
-    <br><br>
-    {% endblock content %}
-
-
+{% endblock content %}

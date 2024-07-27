@@ -37,13 +37,18 @@
 
                     <div>
                         <label for="stock_quantity" class="block text-sm font-medium text-gray-700">Stock Quantity:</label>
-                        <input type="number" id="stock_quantity" name="stock_quantity" value="{{ product.stock_quantity }}" minlength="3" max="255" required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="number" id="stock_quantity" name="stock_quantity" value="{{ product.stock_quantity }}" required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
 
                 <div class="mb-6">
+                    <label for="expiration_date" class="block text-sm font-medium text-gray-700">Expiration Date:</label>
+                    <input type="date" id="expiration_date" name="expiration_date" value="{{ product.expiration_date|date:'Y-m-d' }}" required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-6">
                     <label for="category" class="block text-sm font-medium text-gray-700">Category:</label>
-                    <select id="category" name="category" minlength="1" max="50" required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <select id="category" name="category" minlength="1" required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                         {% for category in category %}
                             <option value="{{ category.id }}" {% if category.id == product.category.id %}selected{% endif %}>{{ category.name }}</option>
                         {% endfor %}
@@ -52,7 +57,7 @@
 
                 <div class="mb-6">
                     <label for="suppliers" class="block text-sm font-medium text-gray-700">Suppliers:</label>
-                    <select id="suppliers" name="suppliers" minlength="1" max="50" required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <select id="suppliers" name="suppliers" minlength="1"  required class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                         {% for supplier in suppliers %}
                             <option value="{{ supplier.id }}" {% if supplier in product.suppliers.all %}selected{% endif %}>{{ supplier.name }}</option>
                         {% endfor %}
