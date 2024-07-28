@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-6">Update Stock for {{ product.name }}</h2>
+    <h2 class="bold-font-prop tilt-in-fwd-bl text-blue-800 mb-16">Update Stock for {{ product.name }}</h2>
     <form method="post" action="{% url 'Product:update_stock' product.id %}" class="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
         {% csrf_token %}
         <div class="mb-4">
@@ -17,7 +17,10 @@
             <label class="block text-gray-600 font-medium mb-2">Stock Quantity</label>
             <input type="number" name="stock_quantity" value="{{ product.stock_quantity }}" class="border rounded-md p-2 w-full">
         </div>
-        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Update Stock</button>
+
+        <div class="justify-center items-center text-center">
+            <button type="submit" class="bg-indigo-600 text-white  px-28 py-2 rounded-md hover:bg-indigo-700">Update Stock</button>
+        </div>
     </form>
 </div>
 {% endblock %}

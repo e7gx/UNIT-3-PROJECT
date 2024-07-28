@@ -30,7 +30,7 @@ def thanksPage(request:HttpResponse):
     return render(request,'Product/thanks_page.html')
 
 
-def product_list(request):
+def product_list(request:HttpResponse):
     products = Product.objects.all()
     categories = Category.objects.all()
     
@@ -93,8 +93,6 @@ def product_delete(request:HttpResponse, pk):
     return render(request, 'Product/product_confirm_delete.html', {'product': product})
 
 
-from django.core.paginator import Paginator
-
 
 def product_search(request):
     query = request.GET.get('query')
@@ -118,17 +116,20 @@ def product_search(request):
 
 
 
-
-def stock_status(request):
+def stock_status(request:HttpResponse):
     products = Product.objects.all()
     return render(request, 'Product/stock_status.html', {'products': products})
 
 
+
 def stock_status(request):
-    products = Product.objects.all()
+    products_list = Product.objects.all()
+    paginator = Paginator(products_list, 10)  # Show 10 products per page
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
     return render(request, 'Product/stock_status.html', {'products': products})
 
-def update_stock(request, pk):
+def update_stock(request:HttpResponse, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
         stock_quantity = request.POST.get('stock_quantity')
@@ -136,10 +137,9 @@ def update_stock(request, pk):
             try:
                 product.stock_quantity = int(stock_quantity)
                 product.save()
-                send_alerts()  # Send alerts after updating stock quantity
-                return redirect('Product:stock_status')  # Adjust this to your actual URL pattern name
+                send_alerts()  #! Send alerts after updating stock quantity
+                return redirect('Product:stock_status')  
             except ValueError:
-                # Handle the case where stock_quantity is not a valid integer
                 print("Invalid stock quantity provided.")
         else:
             print("No stock quantity provided.")
@@ -148,7 +148,7 @@ def update_stock(request, pk):
 
 
 def export_products_csv(request:HttpResponse):
-    # Create the HttpResponse object with CSV content type
+
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="products_and_suppliers.csv"'
 
@@ -199,13 +199,11 @@ def export_products_csv(request:HttpResponse):
 
 
 
-def export_products_excel(request):
-    # Create an in-memory workbook
+def export_products_excel(request:HttpResponse):
     workbook = Workbook()
     worksheet = workbook.active
     worksheet.title = 'Products and Suppliers'
 
-    # Write the header row
     headers = [
         'Product ID', 'Product Name', 'Product Image URL', 'Product Description', 'Product Price',
         'Product Stock Quantity', 'Product Category', 'Product Suppliers', 'Product Created At',
@@ -216,7 +214,6 @@ def export_products_excel(request):
     ]
     worksheet.append(headers)
 
-    # Write data rows
     products = Product.objects.all()
     for product in products:
         for supplier in product.suppliers.all():
@@ -250,13 +247,11 @@ def export_products_excel(request):
             ]
             worksheet.append(row)
 
-    # Save workbook to a temporary file
     with NamedTemporaryFile() as tmp:
         workbook.save(tmp.name)
-        tmp.seek(0)  # Move to the start of the file
+        tmp.seek(0) 
         output = tmp.read()
 
-    # Create response with the file content
     response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename="products_and_suppliers.xlsx"'
     return response

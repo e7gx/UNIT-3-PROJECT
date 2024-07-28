@@ -38,11 +38,9 @@ def add_supplier(request):
     return render(request, 'suppliers/add_supplier.html', context)
 
 def update_supplier(request, pk):
-    # Fetch the existing supplier instance based on the supplier_id
     supplier = get_object_or_404(Supplier, id=pk)
 
     if request.method == 'POST':
-        # Bind the form with the existing supplier instance and request data
         form = SupplierForm(request.POST, request.FILES, instance=supplier)
         if form.is_valid():
             form.save()

@@ -28,11 +28,11 @@
             </button>
         </form>
         <div class="justify-end items-end pr-16">
-            <a href="{% url 'Product:product_create' %}" class="py-2 px-6 bg-blue-800 hover:bg-blue-600 text-sm text-white font-bold rounded-lg transition duration-200">Add Product</a>
-            <a href="{% url 'Product:export_products_csv' %}" class="py-2 px-6 bg-teal-600 hover:bg-teal-600 text-sm text-white font-bold rounded-lg transition duration-200">Export to CSV</a>
-            <a href="{% url 'Product:export_products_excel' %}" class="py-2 px-6 bg-green-600 hover:bg-green-600 text-sm text-white font-bold rounded-lg transition duration-200">
-                Export To Excel
+            <a href="{% url 'Product:export_products_csv' %}" class="mr-3 py-2 px-6 bg-teal-600 hover:bg-teal-600 text-sm text-white font-bold rounded-lg transition duration-200">Export to CSV <i class="fas fa-file-csv mr-2"></i></a>
+            <a href="{% url 'Product:export_products_excel' %}" class="mr-3 py-2 px-6 bg-green-600 hover:bg-green-600 text-sm text-white font-bold rounded-lg transition duration-200">
+                Export To Excel <i class="fas fa-file-excel mr-2"></i>
             </a>
+            <a href="{% url 'Product:product_create' %}" class="mr-3 py-2 px-6 bg-blue-800 hover:bg-blue-600 text-sm text-white font-bold rounded-lg transition duration-200">Add Product <i class="fas fa-user-plus mr-2"></i></a>
             
         </div>
     </div>

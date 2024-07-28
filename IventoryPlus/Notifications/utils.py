@@ -1,12 +1,11 @@
-# Notifications/utils.py
-
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
 from Product.models import Product
+from .models import EmailRecipient 
 import os
 
 def check_low_stock():
-    low_stock_threshold = 10  # Define what constitutes "low stock"
+    low_stock_threshold = 10  
     low_stock_products = Product.objects.filter(stock_quantity__lte=low_stock_threshold)
     return low_stock_products
 
@@ -33,10 +32,11 @@ def send_alerts():
             for product in upcoming_expiry_products:
                 message += f" - {product.name}: expires on {product.expiration_date}\n"
         
+        recipients = [recipient.email for recipient in EmailRecipient.objects.all()]
         send_mail(
             'Inventory Alerts',
             message,
             os.getenv('DEFAULT_FROM_EMAIL'),
-            ['abalgabo@gmail.com'],
+            recipients,
             fail_silently=False,
         )
