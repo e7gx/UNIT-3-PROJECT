@@ -24,8 +24,15 @@
                             <a href="{% url 'Product:product_detail' product.pk %}">{{ product.name }}</a>
                         </p>
                         <p class="text-gray-500 font-medium">Category: {{ product.category.name }}</p>
-                        <p class="text-gray-500 font-medium">Supplier: {{ product.suppliers.name }}</p>
-                        <p class="text-red-500 font-medium">{{ product.price }}</p>
+
+
+                        <p class="text-gray-500 font-medium">
+                                {% for supplier in product.suppliers.all %}
+                                <a href="{% url 'Suppliers:supplier_detail' supplier.id %}" class="text-gray-500 font-medium">Supplier: {{ supplier.name }}</a>
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p class="text-gray-500 font-medium">Stock Quantity: {{ product.stock_quantity }}</p>
                     </div>
                 </div>
                 {% endfor %}
@@ -43,7 +50,7 @@
 
     <!-- Pagination Controls -->
     {% if products.has_other_pages %}
-        <div class="flex justify-center mt-8">
+        <div class="flex justify-center mt-8 mb-8">
             <div class="flex items-center space-x-2">
                 {% if products.has_previous %}
                     <a href="?query={{ query }}&page=1" class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md transition duration-300 ease-in-out transform hover:bg-blue-600 hover:scale-105">&laquo; First</a>
@@ -60,4 +67,5 @@
         </div>
     {% endif %}
 </div>
+<br><br>
 {% endblock content %}
