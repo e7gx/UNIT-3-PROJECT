@@ -11,17 +11,11 @@ from tempfile import NamedTemporaryFile
 from openpyxl import Workbook
 from datetime import datetime
 from Notifications.utils import send_alerts
-
-
-def home(request:HttpResponse):
-    return render(request, 'Product/home.html')
-
-
+from django.utils.dateparse import parse_datetime, parse_date
+from django.contrib import messages
 
 def login(request:HttpResponse):
     return render(request, 'Product/login.html')
-
-
 
 def signup(request:HttpResponse):
     return render(request, 'Product/signup.html')
@@ -255,3 +249,65 @@ def export_products_excel(request:HttpResponse):
     response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename="products_and_suppliers.xlsx"'
     return response
+
+
+
+def import_products_csv(request):
+    if request.method == 'POST':
+        csv_file = request.FILES['csv_file']
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'This is not a CSV file. Please upload a valid CSV file.')
+            return render(request, 'Product/import_products.html')
+
+        decoded_file = csv_file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+        error_occurred = False
+
+        for row in reader:
+            try:
+                category, created = Category.objects.get_or_create(name=row['category'])
+            except Exception as e:
+                messages.error(request, f'Error processing CSV file: {e}')
+                error_occurred = True
+                break
+
+            suppliers_names = row['suppliers'].split(';')
+            suppliers = Supplier.objects.filter(name__in=suppliers_names)
+
+            if not suppliers.exists():
+                messages.error(request, f'One or more suppliers with names {row["suppliers"]} do not exist.')
+                error_occurred = True
+                continue
+
+            try:
+                product, created = Product.objects.update_or_create(
+                    name=row['name'],
+                    defaults={
+                        'product_image': row['product_image'],
+                        'description': row['description'],
+                        'price': row['price'],
+                        'stock_quantity': row['stock_quantity'],
+                        'category': category,
+                        'created_at': parse_datetime(row['created_at']),
+                        'expiration_date': parse_date(row['expiration_date']),
+                    }
+                )
+                product.suppliers.set(suppliers)
+                product.save()
+
+                if created:
+                    messages.success(request, f'Product {row["name"]} was successfully created.')
+                else:
+                    messages.warning(request, f'Product {row["name"]} already exists and was updated.')
+
+            except Exception as e:
+                messages.error(request, f'Error saving product {row["name"]}: {e}')
+                error_occurred = True
+                continue
+
+        if not error_occurred:
+            messages.success(request, 'Products imported successfully.')
+        
+        return redirect('Product:import_products_csv')
+
+    return render(request, 'Product/import_products.html')

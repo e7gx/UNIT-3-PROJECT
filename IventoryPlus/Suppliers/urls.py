@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:pk>/update/', views.update_supplier, name='update_supplier'),
     path('<int:pk>/delete/', views.delete_supplier, name='delete_supplier'),
     path('search/', views.supplier_search, name='search'),
+    path('upload_csv/', views.upload_csv, name='upload_csv'),
 ]

@@ -21,7 +21,6 @@
    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-
    <title>{% block title %}Product{% endblock %}</title>
 
 </head>
@@ -30,7 +29,7 @@
 
    <body>
       <nav class="relative px-4 py-4 flex justify-between items-center bg-transparent">
-         <a class="text-3xl font-bold leading-none" href="{% url 'Product:home' %}">
+         <a class="text-3xl font-bold leading-none" href="{% url 'Reports:dashboard' %}">
             <img src="{% static 'images/box.png' %}"
                style="width: 70px; padding-left:1rem; z-index: -1; display:flex; flex-direction:column-start;" alt>
          </a>
@@ -178,7 +177,7 @@
       <footer class="left-0 w-full bg-white shadow dark:bg-blue-800 mt-auto">
          <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
             <span class="text-sm text-white sm:text-center dark:text-white">©
-               2024 <a href="https://flowbite.com/" class="hover:underline">Saqer™</a>. All Rights Reserved
+               2024 <a href="#" class="hover:underline">Saqer™</a>. All Rights Reserved
                ❤️.</span>
             <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-white dark:text-white sm:mt-0">
                <li>

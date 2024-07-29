@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category
 from .forms import CategoryForm
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 def add_category(request):
     if request.method == 'POST':
@@ -44,24 +45,36 @@ def list_categories(request):
 
 
 
+
 def import_categories_csv(request):
     if request.method == 'POST':
-        csv_file = request.FILES['csv_file']
+        csv_file = request.FILES.get('csv_file')
+        if not csv_file:
+            messages.error(request, 'Please upload a CSV file.')
+            return render(request, 'categories/import_categories.html')
+
         if not csv_file.name.endswith('.csv'):
-            return render(request, 'categories/import_categories_csv.html', {'error': 'This is not a CSV file.'})
+            messages.error(request, 'This is not a CSV file.')
+            return render(request, 'categories/import_categories.html')
 
-        decoded_file = csv_file.read().decode('utf-8').splitlines()
-        reader = csv.DictReader(decoded_file)
+        try:
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.DictReader(decoded_file)
 
-        for row in reader:
-            try:
-                Category.objects.create(
-                    name=row['name'],
-                    description=row.get('description', '')
-                )
-            except Exception as e:
-                print(f"Error saving category: {e}")
-        
-        return redirect('categories:list_categories')
-    
-    return render(request, 'categories/import_categories_csv.html')
+            for row in reader:
+                try:
+                    Category.objects.create(
+                        name=row['name'],
+                        description=row.get('description', '')
+                    )
+                except Exception as e:
+                    messages.error(request, f'Error saving category {row["name"]}: {e}')
+                    continue
+
+            messages.success(request, 'Categories imported successfully.')
+            return redirect('categories:list_categories')
+
+        except Exception as e:
+            messages.error(request, f'Error processing CSV file: {e}')
+
+    return render(request, 'Categories/import_categories_csv.html')

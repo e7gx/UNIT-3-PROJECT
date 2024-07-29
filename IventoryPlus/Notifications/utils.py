@@ -15,28 +15,34 @@ def check_expiry_dates():
     return upcoming_expiry_products
 
 def send_alerts():
-    low_stock_products = check_low_stock()
-    upcoming_expiry_products = check_expiry_dates()
-    
-    if low_stock_products.exists() or upcoming_expiry_products.exists():
-        message = "The following alerts need your attention:\n\n"
+        low_stock_products = check_low_stock()
+        upcoming_expiry_products = check_expiry_dates()
         
-        if low_stock_products.exists():
-            message += "Low Stock Alerts:\n"
-            for product in low_stock_products:
-                message += f" - {product.name}: {product.stock_quantity} units remaining\n"
-            message += "\n"
-        
-        if upcoming_expiry_products.exists():
-            message += "Expiry Date Alerts:\n"
-            for product in upcoming_expiry_products:
-                message += f" - {product.name}: expires on {product.expiration_date}\n"
-        
-        recipients = [recipient.email for recipient in EmailRecipient.objects.all()]
-        send_mail(
-            'Inventory Alerts',
-            message,
-            os.getenv('DEFAULT_FROM_EMAIL'),
-            recipients,
-            fail_silently=False,
-        )
+        if low_stock_products.exists() or upcoming_expiry_products.exists():
+            message = "<html><body>"
+            
+            if low_stock_products.exists():
+                message += "<h2>Low Stock Alerts:</h2>"
+                message += "<ul>"
+                for product in low_stock_products:
+                    message += f"<li>{product.name}: {product.stock_quantity} units remaining</li>"
+                message += "</ul>"
+            
+            if upcoming_expiry_products.exists():
+                message += "<h2>Expiry Date Alerts:</h2>"
+                message += "<ul>"
+                for product in upcoming_expiry_products:
+                    message += f"<li>{product.name}: expires on {product.expiration_date}</li>"
+                message += "</ul>"
+            
+            message += "</body></html>"
+            
+            recipients = [recipient.email for recipient in EmailRecipient.objects.all()]
+            send_mail(
+                'Inventory Alerts',
+                message,
+                os.getenv('DEFAULT_FROM_EMAIL'),
+                recipients,
+                fail_silently=False,
+                html_message=message,
+            )

@@ -1,0 +1,36 @@
+{% load static %}
+    <style>
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .chart {
+            width: 50%;
+            max-width: 700px;
+            height: 400px;
+        }
+    </style>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <div class="chart-container">
+        <div id="total-products-chart" class="chart"></div>
+        <div id="category-distribution-chart" class="chart"></div>
+    </div>
+    <script>
+        var totalProductsData = JSON.parse('{{ total_products_data|escapejs }}');
+        var totalSuppliersData = JSON.parse('{{ total_suppliers_data|escapejs }}');
+        
+        Plotly.newPlot('total-products-chart', totalProductsData);
+
+        
+        var categoryLabels = JSON.parse('{{ category_labels|escapejs }}');
+        var categoryValues = JSON.parse('{{ category_values|escapejs }}');
+        var categoryData = [{
+            type: 'pie',
+            labels: categoryLabels,
+            values: categoryValues
+        }];
+    
+        Plotly.newPlot('category-distribution-chart', categoryData);
+
+    </script>

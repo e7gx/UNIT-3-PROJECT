@@ -1,5 +1,7 @@
 {% extends 'Product/base.html' %}
-
+{% block title %}
+Stock Status
+{% endblock title %}
 {% block content %}
 <div class="container mx-auto px-4 py-4">
     <h2 class="bold-font-prop tilt-in-fwd-bl text-3xl font-bold text-blue-800 mb-8">Stock Status</h2>
@@ -33,7 +35,11 @@
             <tr class="border-b hover:bg-gray-50">
                 <td class="text-center py-3 px-6 text-gray-800">{{ product.name }}</td>
                 <td class="text-center py-3 px-6 text-gray-800 {% if product.stock_quantity == 0 %}text-red-600{% endif %}">{{ product.stock_quantity }}</td>
-                <td class="text-center py-3 px-6 text-gray-800">{{ product.expiration_date|date:"Y-m-d" }}</td>
+                <td class="text-center py-3 px-6 ">
+                    <div class="py-1 px-1 {% if product.expiration_date and product.expiration_date <= today %}bg-red-500 justify-center text-center text-white rounded-lg {% elif product.expiration_date and product.expiration_date <= one_week_from_today %}bg-yellow-400 justify-center text-center text-white rounded-lg{% else %}text-white bg-teal-500  justify-center text-center rounded-lg{% endif %}">
+                        {{ product.expiration_date|date:"Y-m-d" }}
+                    </div>
+                </td>
                 <td class="text-center py-3 px-6 text-white">
                     <div class="text-center py-1 text-gray-800 {% if product.stock_quantity <= 10 %} bg-red-500 justify-center text-center text-white rounded-lg{% elif product.stock_quantity <= 20 %}rounded-lg bg-yellow-400 justify-center text-center text-white{% else %}bg-teal-500 text-white justify-center text-center rounded-lg{% endif %}">
                         {% if product.stock_quantity <= 10 %}
@@ -47,7 +53,7 @@
                 </td>
                 <td class="py-2 px-4 text-center">
                     <a href="{% url 'Product:update_stock' product.pk %}" class="text-indigo-800">
-                        <button class="bg-indigo-600 hover:bg-indigo-800 text-center py-2 px-2 text-white rounded-xl">Update Stock</button>
+                        <button class="bg-indigo-600 hover:bg-indigo-800 text-center text-inherit py-2 px-4 text-white rounded-xl">Update </button>
                     </a>
                 </td>
             </tr>

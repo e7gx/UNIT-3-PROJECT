@@ -2,29 +2,32 @@
 {% block title %}Add Category{% endblock title %}
 
 {% block content %}
-
-<div class="content-home-padding pr-16">
-
-    
-    <h2 class="bold-font-prop tilt-in-fwd-bl text-3xl font-bold text-blue-800 mb-8">Import Categories from CSV</h2>
-    <div class="flex justify-center items-center mt-16  p-8 rounded-lg shadow-md">
-        <form method="post" enctype="multipart/form-data" class="w-full max-w-md">
+<div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h1 class="tilt-in-fwd-bl text-center text-3xl font-bold text-blue-800 mb-8">Import Categories from CSV</h1>
+        </div>
+        <form method="post" enctype="multipart/form-data" class="mt-8 space-y-6 bg-white p-8 shadow rounded-lg">
             {% csrf_token %}
-            <h1 class="text-3xl font-bold text-blue-800 mb-8 text-center">Import Categories from CSV</h1>
-            <div class="mb-4">
-                <label for="csv_file" class="block text-gray-700 font-bold mb-2">Choose CSV file:</label>
-                <input type="file" id="csv_file" name="csv_file" required class="w-full p-2 border border-gray-300 rounded">
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div class="mb-4">
+                    <label for="csv_file" class="block text-gray-700 text-sm font-bold mb-2">Choose CSV file:</label>
+                    <input type="file" accept=".csv" id="csv_file" name="csv_file" required class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
             </div>
-            <div class="flex justify-center">
-                <button type="submit" class="bg-blue-700 hover:bg-800 text-white font-bold py-2 w-full rounded transition duration-200">
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     Upload
                 </button>
             </div>
         </form>
+        {% if error %}
+            <div class="mt-4">
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <span class="block sm:inline">{{ error }}</span>
+                </div>
+            </div>
+        {% endif %}
     </div>
-
-    {% if error %}
-        <p style="color: red;" class="text-center mt-4">{{ error }}</p>
-    {% endif %}
 </div>
 {% endblock content %}

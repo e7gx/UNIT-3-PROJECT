@@ -1,17 +1,16 @@
 {% extends "Product/base.html" %}
 {% load static %}
-
 {% block title %}Products{% endblock title %}
 {% block content %}
 
 <script>
     AOS.init();
 </script>
-<div class="content-home-padding pr-16">
+<div class="content-home-padding pr-4 md:pr-16">
     <h1 class="bold-font-prop tilt-in-fwd-bl text-blue-800">Product List</h1>
 
-    <div class="mb-8 flex justify-between items-center">
-        <form method="GET" action="" class="m-4 flex items-center">
+    <div class="mb-8 flex flex-wrap justify-between items-center">
+        <form method="GET" action="" class="m-4 flex flex-wrap items-center">
             <img src="{% static 'images/filter.png' %}" class="h-[20px] inline-flex justify-center mr-4" alt="Filter">
             <label for="category" class="mr-2">Category:</label>
             <select name="category" id="category" class="mr-4">
@@ -22,18 +21,15 @@
                 </option>
                 {% endfor %}
             </select>
-            
-            <button type="submit" class="h-[25px] bg-blue-800 rounded-xl px-8 text-white font-bold">
+            <button type="submit" class="h-[25px] bg-blue-800 rounded-xl px-8 text-white font-bold mt-2 md:mt-0">
                 Apply filter <img src="{% static 'images/done.png' %}" class="h-[20px] inline-flex justify-center" alt="Filter">
             </button>
         </form>
-        <div class="justify-end items-end pr-16">
-            <a href="{% url 'Product:export_products_csv' %}" class="mr-3 py-2 px-6 bg-teal-600 hover:bg-teal-600 text-sm text-white font-bold rounded-lg transition duration-200">Export to CSV <i class="fas fa-file-csv mr-2"></i></a>
-            <a href="{% url 'Product:export_products_excel' %}" class="mr-3 py-2 px-6 bg-green-600 hover:bg-green-600 text-sm text-white font-bold rounded-lg transition duration-200">
-                Export To Excel <i class="fas fa-file-excel mr-2"></i>
-            </a>
+        <div class="flex flex-wrap justify-end items-end pr-4 md:pr-8 mt-4 md:mt-0">
+            <a href="{% url 'Product:import_products_csv' %}" class="mr-3 py-2 px-6 bg-orange-600 hover:bg-orange-600 text-sm text-white font-bold rounded-lg transition duration-200 mb-2 md:mb-0">Import CSV <i class="fas fa-file-csv mr-2"></i></a>
+            <a href="{% url 'Product:export_products_csv' %}" class="mr-3 py-2 px-6 bg-teal-600 hover:bg-teal-600 text-sm text-white font-bold rounded-lg transition duration-200 mb-2 md:mb-0">Export to CSV <i class="fas fa-file-csv mr-2"></i></a>
+            <a href="{% url 'Product:export_products_excel' %}" class="mr-3 py-2 px-6 bg-green-600 hover:bg-green-600 text-sm text-white font-bold rounded-lg transition duration-200 mb-2 md:mb-0">Export To Excel <i class="fas fa-file-excel mr-2"></i></a>
             <a href="{% url 'Product:product_create' %}" class="mr-3 py-2 px-6 bg-blue-800 hover:bg-blue-600 text-sm text-white font-bold rounded-lg transition duration-200">Add Product <i class="fas fa-user-plus mr-2"></i></a>
-            
         </div>
     </div>
 
@@ -45,19 +41,25 @@
                     <th scope="col" class="px-6 py-3">Name</th>
                     <th scope="col" class="px-6 py-3">Category</th>
                     <th scope="col" class="px-6 py-3">Price</th>
+                    <th scope="col" class="px-6 py-3">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for product in products %}
                 <tr class="bg-white border-b hover:bg-gray-50">
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-2">
                         <img src="{{ product.product_image.url }}" alt="image" class="w-20 h-20 object-cover rounded-xl"/>
                     </td>
-                    <td class="px-6 py-4 font-medium text-gray-900">
+                    <td class="px-6 py-2 font-medium text-gray-900">
                         <a href="{% url 'Product:product_detail' product.pk %}">{{ product.name }}</a>
                     </td>
-                    <td class="px-6 py-4">{{ product.category }}</td>
-                    <td class="px-6 py-4 text-red-500">{{ product.price }} $</td>
+                    <td class="px-6 py-2">{{ product.category }}</td>
+                    <td class="px-6 py-2 text-red-500">{{ product.price }} $</td>
+                    <td class="px-6 py-2">
+                        <a href="{% url 'Product:product_detail' product.pk %}" class="text-gray-200  bg-blue-800 rounded-lg px-6 py-2 ">
+                        Preview
+                        </a>
+                </td>
                 </tr>
                 {% empty %}
                 <tr>
