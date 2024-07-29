@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-        <div class="p-4 bg-pink-400">
+        <div class="p-4 bg-teal-400">
             <img src="{% static 'images/trending_up.png' %}" alt="Image" class="h-12 w-12">
         </div>
         <div class="px-4 text-gray-700">
@@ -80,15 +80,55 @@
         </div>
     </div>
     <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+        <div class="p-4 bg-pink-400">
+            <img src="{% static 'images/down.png' %}" alt="Image" class="h-12 w-12">
+        </div>
+        <div class="px-4 text-gray-700">
+            <h3 class="text-sm tracking-wider">Lower Category</h3>
+            <p class="text-3xl">{{ lower_category }}</p>
+        </div>
+    </div>
+    <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
         <div class="p-4 bg-teal-400">
             <img src="{% static 'images/trending_up.png' %}" alt="Image" class="h-12 w-12">
-
         </div>
         <div class="px-4 text-gray-700">
             <h3 class="text-sm tracking-wider">Top Supplier</h3>
             <p class="text-3xl">{{ top_supplier }}</p>
         </div>
     </div>
+    <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+        <div class="p-4 bg-red-400">
+            <img src="{% static 'images/down.png' %}" alt="Image" class="h-12 w-12">
+        </div>
+        <div class="px-4 text-gray-700">
+            <h3 class="text-sm tracking-wider">Lower Supplier</h3>
+            <p class="text-3xl">{{ lower_supplier }}</p>
+        </div>
+    </div>
+    <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+        <div class="p-4 bg-yellow-400">
+            <img src="{% static 'images/down.png' %}" alt="Image" class="h-12 w-12">
+        </div>
+        <div class="px-4 text-gray-700">
+            <h3 class="text-sm tracking-wider">low Price Product</h3>
+            <p class="text-3xl">{{ low_price }}</p>
+        </div>
+    </div>
+    <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+        <div class="p-4 bg-teal-400">
+            <img src="{% static 'images/trending_up.png' %}" alt="Image" class="h-12 w-12">
+        </div>
+    
+        <div class="px-4 text-gray-700">
+            <h3 class="text-sm tracking-wider">height Price Product</h3>
+            <p class="text-3xl">{{ high_price }}</p>
+        </div>
+    </div>
+
+
+    
+
 </div>
 {% include 'Reports/charts.html' %}
 {% endblock %}
