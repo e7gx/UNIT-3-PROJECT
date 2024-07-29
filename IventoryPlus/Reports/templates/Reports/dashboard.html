@@ -91,31 +91,4 @@
     </div>
 </div>
 {% include 'Reports/charts.html' %}
-
-<script>
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Fetch data periodically or on specific events
-        setInterval(fetchDashboardData, 30000); // Fetch data every 30 seconds
-    
-        function fetchDashboardData() {
-            fetch('/api/dashboard-data/')
-                .then(response => response.json())
-                .then(data => {
-                    document.querySelector('#total-products').innerText = data.total_products;
-                    document.querySelector('#total-suppliers').innerText = data.total_suppliers;
-                    document.querySelector('#total-categories').innerText = data.total_categories;
-                    document.querySelector('#stock-status').innerText = `${data.stock_status.toFixed(2)}%`;
-                    document.querySelector('#total-revenue').innerText = data.total_revenue.toFixed(2);
-                    document.querySelector('#average-product-price').innerText = data.average_product_price.toFixed(2);
-                    document.querySelector('#top-category').innerText = data.top_category;
-                    document.querySelector('#top-supplier').innerText = data.top_supplier;
-                });
-        }
-    });
-
-    
-</script>
-
-
 {% endblock %}

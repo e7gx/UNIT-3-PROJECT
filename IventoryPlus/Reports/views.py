@@ -19,7 +19,6 @@ def dashboard(request):
     top_supplier = Supplier.objects.annotate(total_supplied=models.Count('product')).order_by('-total_supplied').first()
     category_distribution = Category.objects.annotate(product_count=models.Count('product')).values('name', 'product_count')
 
-    # Data for charts
     total_products_data = [go.Bar(x=['Products','Suppliers'], y=[total_products,total_suppliers])]
     total_suppliers_data = [go.Bar(x=['Categories','Revenue'], y=[average_product_price,total_revenue])]    
     category_labels = [cat['name'] for cat in category_distribution]
