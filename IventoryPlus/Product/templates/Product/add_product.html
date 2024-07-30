@@ -22,7 +22,7 @@
                 
                 <div class="mb-6">
                     <label for="product_image" class="block text-sm font-medium text-gray-700">Product Image:</label>
-                    <input type="file" id="product_image" name="product_image" accept="image/*" class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="file" id="product_image" name="product_image" accept=".png, .jpeg, .jpg" class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                     {% if product.product_image %}
                         <img src="{{ product.product_image.url }}" alt="Current Image" class="mt-4 w-32 h-32 rounded-lg shadow-md">
                     {% endif %}
