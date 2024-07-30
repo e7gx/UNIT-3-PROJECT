@@ -19,13 +19,15 @@
             <label class="block text-gray-600 font-medium mb-2">Category</label>
             <p class="py-2 px-4 bg-gray-100 rounded">{{ product.category }}</p>
         </div>
+
         <div class="mb-4">
             <label class="block text-gray-600 font-medium mb-2">Stock Quantity</label>
             <input type="number" name="stock_quantity" value="{{ product.stock_quantity }}" class="border rounded-md p-2 w-full">
         </div>
+
         <div class="mb-4">
             <label class="block text-gray-600 font-medium mb-2">Expiration Date</label>
-            <input type="date" name="expiration_date" value="{{ product.expiration_date }}" class="border rounded-md p-2 w-full">
+            <input type="date" name="expiration_date" value="{{ product.expiration_date|date:'Y-m-d' }}" class="border rounded-md p-2 w-full">
         </div>
 
         <div class="justify-center items-center text-center">
