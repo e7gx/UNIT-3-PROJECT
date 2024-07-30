@@ -32,7 +32,7 @@ def product_list(request:HttpResponse):
     if category_filter:
         products = products.filter(category__id=category_filter)
 
-    paginator = Paginator(products, 10)  #! Show 10 products per page
+    paginator = Paginator(products, 8)  #! Show 8 products per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -118,7 +118,7 @@ def stock_status(request:HttpResponse):
 
 def stock_status(request):
     products_list = Product.objects.all()
-    paginator = Paginator(products_list, 10)  # Show 10 products per page
+    paginator = Paginator(products_list, 8)  # Show 10 products per page
     page_number = request.GET.get('page')
     products = paginator.get_page(page_number)
     return render(request, 'Product/stock_status.html', {'products': products})

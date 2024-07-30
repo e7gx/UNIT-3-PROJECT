@@ -34,7 +34,7 @@
                style="width: 70px; padding-left:1rem; z-index: -1; display:flex; flex-direction:column-start;" alt>
          </a>
          <div class="lg:hidden">
-            <button class="navbar-burger flex items-center text-blue-600 p-3">
+            <button class="navbar-burger flex items-center text-blue-800 p-3">
                <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <title>Mobile menu</title>
                   <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
@@ -43,7 +43,7 @@
          </div>
          <ul
             class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
-            <li><a class="text-sm text-blue-600 font-bold hover:text-blue-800 transition duration-200"
+            <li><a class="text-sm text-blue-700 font-bold hover:text-blue-800 transition duration-200"
                   href="{% url 'Product:stock_status' %}">Stock</a></li>
                   
                   <li class="text-gray-300">
@@ -54,7 +54,7 @@
                      </svg>
                   </li>
 
-            <li><a class="text-sm text-blue-600 font-bold hover:text-blue-900"
+            <li><a class="text-sm text-blue-700 font-bold hover:text-blue-900"
                   href="{% url 'Product:product_list' %}">Products</a></li>
 
                   <li class="text-gray-300">
@@ -66,7 +66,7 @@
                   </li>
 
 
-            <li><a class="text-sm text-blue-600 font-bold hover:text-blue-900"
+            <li><a class="text-sm text-blue-700 font-bold hover:text-blue-900"
                   href="{% url 'categories:list_categories' %}">Categories</a></li>
 
                   <li class="text-gray-300">
@@ -78,7 +78,7 @@
                   </li>
 
 
-            <li><a class="text-sm text-blue-600 font-bold hover:text-blue-900"
+            <li><a class="text-sm text-blue-700 font-bold hover:text-blue-900"
                   href="{% url 'Suppliers:supplier_list' %}">Suppliers</a></li>
 
                   <li class="text-gray-300">
@@ -90,7 +90,7 @@
                   </li>
 
 
-            <li><a class="text-sm text-blue-600 font-bold hover:text-blue-900"
+            <li><a class="text-sm text-blue-700 font-bold hover:text-blue-900"
                   href="{% url 'Product:search' %}">Search</a></li>
 
                   <li class="text-gray-300">
@@ -102,13 +102,11 @@
                   </li>
 
 
-            <li><a class="text-sm text-blue-600 font-bold hover:text-blue-900"
+            <li><a class="text-sm text-blue-700 font-bold hover:text-blue-900"
                   href="{% url 'Reports:dashboard' %}">Dashboard</a></li>
          </ul>
-         <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200"
-            href="{% url 'Product:login' %}">Sign In</a>
-         <a class="hidden lg:inline-block py-2 px-6 bg-blue-800 hover:bg-blue-700 text-sm text-white font-bold rounded-xl transition duration-200"
-            href="{% url 'Product:signup' %}">Sign up</a>
+         <a class="hidden lg:inline-block py-2 px-6 bg-blue-800 hover:bg-blue-900 text-sm text-white font-bold rounded-xl transition duration-200"
+            href="{% url 'Product:login' %}">Log out 👋</a>
       </nav>
       <div class="navbar-menu relative z-1000 hidden">
          <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
