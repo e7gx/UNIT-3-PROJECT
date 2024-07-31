@@ -3,8 +3,8 @@
 {% block title %} Update Page {% endblock title %}
 
 {% block content %}
-
-    <div class="flex justify-center items-center h-screen px-4 md:px-0">
+<section class="py-16 ">
+    <div class="flex justify-center items-center h-screen px-4 py-16 md:px-0">
         <div class="bg-white rounded-xl shadow-xl p-8 w-full max-w-2xl">
             <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Update Product</h2>
             <form method="post" action="{% url 'Product:product_update' product.pk %}" enctype="multipart/form-data">
@@ -24,7 +24,7 @@
                     <label for="product_image" class="block text-sm font-medium text-gray-700">Product Image:</label>
                     <input type="file" id="product_image" name="product_image" accept="image/*" class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                     {% if product.product_image %}
-                        <img src="{{ product.product_image.url }}" alt="Current Image" class="mt-4 w-32 h-32 rounded-lg shadow-md">
+                        <img src="{{ product.product_image.url }}" alt="Current Image" class="mt-4 w-32 h-12 rounded-lg shadow-md">
                     {% endif %}
                 </div>
 
@@ -69,5 +69,9 @@
             </form>
         </div>
     </div>
+    <br><br>
 
+
+</section>
+   
    {% endblock content %}

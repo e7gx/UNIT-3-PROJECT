@@ -27,7 +27,6 @@ def dashboard(request):
         x=['Products', 'Suppliers', 'Categories'],
         y=[total_products, total_suppliers, total_categories],
     )]
-    
     total_suppliers_data = [go.Bar(
         x=['Categories', 'Revenue'],
         y=[average_product_price, total_revenue],
