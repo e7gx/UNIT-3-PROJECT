@@ -4,7 +4,10 @@ from .models import Category
 from .forms import CategoryForm
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -16,6 +19,7 @@ def add_category(request):
     
     return render(request, 'categories/add_category.html', {'form': form})
 
+@login_required
 def edit_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -28,6 +32,7 @@ def edit_category(request, pk):
     
     return render(request, 'categories/edit_category.html', {'form': form})
 
+@login_required
 def delete_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -36,6 +41,7 @@ def delete_category(request, pk):
     
     return render(request, 'categories/delete_category.html', {'category': category})
 
+@login_required
 def list_categories(request):
     categories_list = Category.objects.order_by('id').all()
     paginator = Paginator(categories_list, 10)  # Show 10 categories per page
@@ -45,7 +51,7 @@ def list_categories(request):
 
 
 
-
+@login_required
 def import_categories_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES.get('csv_file')

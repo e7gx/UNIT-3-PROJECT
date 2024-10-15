@@ -41,6 +41,8 @@
                </svg>
             </button>
          </div>
+         {% if request.user.is_authenticated  %}
+
          <ul
             class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
             <li><a class="text-sm text-blue-700 font-bold hover:text-blue-800 transition duration-200"
@@ -100,13 +102,18 @@
                            d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
                      </svg>
                   </li>
-
-
             <li><a class="text-sm text-blue-700 font-bold hover:text-blue-900"
                   href="{% url 'Reports:dashboard' %}">Dashboard</a></li>
          </ul>
+         {% endif %}
+
+         {% if request.user.is_authenticated  %}
          <a class="hidden lg:inline-block py-2 px-6 bg-blue-800 hover:bg-blue-900 text-sm text-white font-bold rounded-xl transition duration-200"
-            href="{% url 'Product:login' %}">Log out 👋</a>
+            href="{% url 'UserManager:logout' %}">Log out 👋</a>
+         {% else %}
+         <a class="hidden lg:inline-block py-2 px-6 bg-blue-800 hover:bg-blue-900 text-sm text-white font-bold rounded-xl transition duration-200"
+            href="{% url 'UserManager:login' %}">Sign in</a>
+         {% endif %}
       </nav>
       <div class="navbar-menu relative z-1000 hidden">
          <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
@@ -126,6 +133,8 @@
             </div>
             <div>
                <ul>
+                  {% if request.user.is_authenticated  %}
+
                   <li class="mb-1">
                      <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="{% url 'Product:stock_status' %}">Stock</a>
@@ -151,14 +160,26 @@
                         href="{% url 'Reports:dashboard' %}">Dashboard</a>
                   </li>
                </ul>
+               {% endif %}
             </div>
             <div class="mt-auto">
+               {% if request.user.is_authenticated  %}
+               <div class="pt-6">
+
+                  <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-teal-500 rounded-xl"
+                     href="{% url 'UserManager:logout' %}">Logout</a>
+               </div>
+
+               {% else %}
+
                <div class="pt-6">
                   <a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
-                     href="{% url 'Product:login' %}">Sign in</a>
+                     href="{% url 'UserManager:login' %}">Sign in</a>
                   <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-teal-500 rounded-xl"
-                     href="{% url 'Product:signup' %}">Sign Up</a>
+                     href="{% url 'UserManager:signup' %}">Sign Up</a>
                </div>
+
+               {% endif %}
                <p class="my-4 text-xs text-center text-gray-400">
                   <span>Copyright © 2024</span>
                </p>

@@ -5,7 +5,10 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 import csv
 import io
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def upload_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES.get('csv_file')
@@ -53,8 +56,7 @@ def supplier_detail(request, pk):
     return render(request, 'suppliers/supplier_detail.html', {'supplier': supplier})
 
 
-
-
+@login_required
 def add_supplier(request):
     if request.method == 'POST':
         form = SupplierForm(request.POST, request.FILES)
@@ -95,7 +97,7 @@ def update_supplier(request, pk):
     }
     return render(request, 'Suppliers/update_supplier.html', context)
 
-
+@login_required
 def delete_supplier(request, pk):
     supplier = get_object_or_404(Supplier, pk=pk)
     if request.method == 'POST':
@@ -105,7 +107,7 @@ def delete_supplier(request, pk):
 
 
 
-
+@login_required
 def supplier_search(request):
     query = request.GET.get('query')
     suppliers = Supplier.objects.all()

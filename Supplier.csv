@@ -1,0 +1,6 @@
+name,email,logo,phone_number,website,contact_person_name,contact_person_job_title,country,city,active,rating,policy,supplied_products,services_offered,description
+Supplier 1,supplier1@example.com,supplier_logos/default.jpg,1234567890,https://supplier1.com,John Doe,Manager,USA,New York,true,5,Exchange or Refund,Electronics,Delivery,Description for Supplier 1
+Supplier 2,supplier2@example.com,supplier_logos/default.jpg,0987654321,https://supplier2.com,Jane Smith,CEO,UK,London,false,4,Refund Only,Clothing,Installation,Description for Supplier 2
+Supplier 3,supplier3@example.com,supplier_logos/default.jpg,1122334455,https://supplier3.com,Tom Brown,Sales,Canada,Toronto,true,3,No Returns,Food,Support,Description for Supplier 3
+Supplier 4,supplier4@example.com,supplier_logos/default.jpg,5566778899,https://supplier4.com,Emily White,Assistant,Australia,Sydney,true,2,Exchange Only,Books,Warranty,Description for Supplier 4
+Supplier 5,supplier5@example.com,supplier_logos/default.jpg,6677889900,https://supplier5.com,Chris Green,Director,India,Mumbai,false,1,Other,Tools,Maintenance,Description for Supplier 5

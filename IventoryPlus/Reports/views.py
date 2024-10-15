@@ -5,8 +5,12 @@ from Product.models import Product
 from django.db import models
 import plotly.graph_objs as go
 import json
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def dashboard(request):
+    print(request.user)
     total_products = Product.objects.count()
     total_suppliers = Supplier.objects.count()
     total_categories = Category.objects.count()

@@ -1,0 +1,6 @@
+name,product_image,description,price,stock_quantity,category,suppliers,created_at,expiration_date
+iPhone 12,images/iphone12.jpg,Latest model of iPhone,999.99,50,Electronics,Apple;Samsung;LG COMPANY,2024-07-28 00:00:00,2025-07-28
+MacBook Pro,images/macbook_pro.jpg,16-inch MacBook Pro,2399.99,30,Electronics,Apple;Samsung;LG COMPANY,2024-07-28 00:00:00,2025-07-28
+Apple Watch Series 6,images/apple_watch.jpg,Smart Watch by Apple,399.99,100,Electronics,Apple;Samsung;LG COMPANY,2024-07-28 00:00:00,2025-07-28
+iPad Pro,images/ipad_pro.jpg,12.9-inch iPad Pro,1099.99,40,Electronics,Apple;Samsung;LG COMPANY,2024-07-28 00:00:00,2025-07-28
+AirPods Pro,images/airpods_pro.jpg,Noise-cancelling earbuds,249.99,200,Electronics,Apple;Samsung;LG COMPANY,2024-07-28 00:00:00,2025-07-28

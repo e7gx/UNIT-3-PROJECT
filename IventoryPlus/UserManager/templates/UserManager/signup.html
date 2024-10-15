@@ -87,8 +87,16 @@
         <div class="mt-4 flex flex-col lg:flex-row items-center justify-between">
         </div>
 
-        <form action="#" method="POST" class="space-y-4">
+        <form action="{% url 'UserManager:signup' %}" method="POST" class="space-y-4">
             {% csrf_token %}
+            <div>
+              <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
+              <input required type="text" id="first_name" name="first_name" class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+            </div>
+            <div>
+              <label for="last_name" class="block text-sm font-medium text-gray-700">Last name</label>
+              <input required type="text" id="last_name" name="last_name" class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+            </div>
           <div>
             <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
             <input required type="text" id="username" name="username" class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
@@ -106,7 +114,7 @@
           </div>
         </form>
         <div class="mt-4 text-sm text-gray-600 text-center">
-          <p>Already have an account? <a href="{% url 'Product:login' %}" class="text-blue-800 hover:underline">Login here</a>
+          <p>Already have an account? <a href="{% url 'UserManager:login' %}" class="text-blue-800 hover:underline">Login here</a>
           </p>
         </div>
       </div>

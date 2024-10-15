@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Reports',
     'Suppliers',
     'Categories',
+    'UserManager',
 ]
 
 MIDDLEWARE = [

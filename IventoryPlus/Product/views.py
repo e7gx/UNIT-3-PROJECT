@@ -13,17 +13,13 @@ from datetime import datetime
 from Notifications.utils import send_alerts
 from django.utils.dateparse import parse_datetime, parse_date
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-def login(request:HttpResponse):
-    return render(request, 'Product/login.html')
-
-def signup(request:HttpResponse):
-    return render(request, 'Product/signup.html')
-
+@login_required
 def thanksPage(request:HttpResponse):
     return render(request,'Product/thanks_page.html')
 
-
+@login_required
 def product_list(request:HttpResponse):
     products = Product.objects.all()
     categories = Category.objects.all()
@@ -46,7 +42,7 @@ def product_detail(request:HttpResponse, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'Product/product_detail.html', {'product': product})
 
-
+@login_required
 def product_create(request:HttpResponse):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -60,6 +56,7 @@ def product_create(request:HttpResponse):
     
     return render(request, 'Product/add_product.html', {'form': form, 'categories': categories, 'suppliers': suppliers, 'product': None})
 
+@login_required
 def product_update(request:HttpResponse, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -78,7 +75,7 @@ def product_update(request:HttpResponse, pk):
 
     return render(request, 'Product/update_product.html', {'form': form, 'category': category, 'suppliers': suppliers, 'product': product})
 
-
+@login_required
 def product_delete(request:HttpResponse, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -87,7 +84,7 @@ def product_delete(request:HttpResponse, pk):
     return render(request, 'Product/product_confirm_delete.html', {'product': product})
 
 
-
+@login_required
 def product_search(request):
     query = request.GET.get('query')
     products = Product.objects.all()
@@ -109,13 +106,13 @@ def product_search(request):
     return render(request, 'Product/search_product.html', {'products': products, 'count': count, 'query': query})
 
 
-
+@login_required
 def stock_status(request:HttpResponse):
     products = Product.objects.all()
     return render(request, 'Product/stock_status.html', {'products': products})
 
 
-
+@login_required
 def stock_status(request):
     products_list = Product.objects.all()
     paginator = Paginator(products_list, 8)  # Show 10 products per page
@@ -123,6 +120,8 @@ def stock_status(request):
     products = paginator.get_page(page_number)
     return render(request, 'Product/stock_status.html', {'products': products})
 
+
+@login_required
 def update_stock(request:HttpResponse, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -140,7 +139,7 @@ def update_stock(request:HttpResponse, pk):
     return render(request, 'Product/update_stock.html', {'product': product})
 
 
-
+@login_required
 def export_products_csv(request:HttpResponse):
 
     response = HttpResponse(content_type='text/csv')
@@ -192,7 +191,7 @@ def export_products_csv(request:HttpResponse):
 
 
 
-
+@login_required
 def export_products_excel(request:HttpResponse):
     workbook = Workbook()
     worksheet = workbook.active
@@ -251,7 +250,7 @@ def export_products_excel(request:HttpResponse):
     return response
 
 
-
+@login_required
 def import_products_csv(request):
     if request.method == 'POST':
         csv_file = request.FILES['csv_file']
