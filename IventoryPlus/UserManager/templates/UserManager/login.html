@@ -5,7 +5,44 @@
 {% block content %}
 
 <div class="flex h-screen">
-    <!-- Left Pane -->
+    {% if messages %}
+    <div class="messages fixed top-5 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center space-y-2 ">
+        {% for message in messages %}
+            <div class="justify-between message bg-red-100 border border-red-300 text-red-600 px-20 py-2 rounded shadow-md transition-opacity duration-500 ease-in-out flex items-center ">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 11-12.728 0 9 9 0 0112.728 0zM12 8v4m0 4h.01"></path>
+                </svg>
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                // Show the message and then hide it after 5 seconds
+                setTimeout(() => {
+                    message.classList.remove('opacity-100');
+                    message.classList.add('opacity-0');
+                }, 5000); // Hides the message after 5 seconds
+            });
+        });
+    </script>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 5000); // Hides the message after 5 seconds
+            });
+        });
+    </script>
+    
     <div
         class="hidden lg:flex items-center justify-center flex-1 bg-white text-black">
         <svg xmlns="http://www.w3.org/2000/svg" width="524.67004"

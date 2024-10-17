@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login ,logout
-
+from django.contrib import messages
+from .models import Profile
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -12,7 +13,9 @@ def login(request):
             auth_login(request, user)  
             return redirect('Product:product_list')  
         else:
-            return HttpResponse('Invalid credentials')
+             messages.error(request, 'Invalid Credentials')
+    
+
     
     return render(request, 'UserManager/login.html')
 
@@ -39,3 +42,19 @@ def logout_view(request):
     return redirect('UserManager:login')
 
 
+def profile(request):
+    user_profile = Profile.objects.get(user=request.user)# get the profile of the logged in user
+    return render(request, 'UserManager/profile.html',{'user_profile':user_profile})
+
+
+def edit_profile(request):
+    user_profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        user_profile.bio = request.POST['bio']
+        user_profile.age = request.POST['age']
+        user_profile.address = request.POST['address']
+        user_profile.phone = request.POST['phone']
+        user_profile.image = request.FILES.get('image')
+        user_profile.save()
+        return redirect('UserManager:profile')
+    return render(request, 'UserManager/edit_profile.html',{'user_profile':user_profile})
