@@ -75,7 +75,7 @@
     <div class="chart-card tooltip">
         <div class="chart-title">
             <img src="{% static 'images/d.png' %}" alt="Image" class="h-8 w-8"> Total Count
-            <span class="tooltiptext">Total number of products, suppliers, and categories.</span>
+            {% comment %} <span class="tooltiptext">Total number of products, suppliers, and categories.</span> {% endcomment %}
         </div>
         <canvas id="total-products-chart" class="chart"></canvas>
     </div>
@@ -84,7 +84,7 @@
     <div class="chart-card tooltip">
         <div class="chart-title">
             <img src="{% static 'images/d.png' %}" alt="Image" class="h-8 w-8"> Monthly Sales
-            <span class="tooltiptext">Sales data for each month.</span>
+            {% comment %} <span class="tooltiptext">Sales data for each month.</span> {% endcomment %}
         </div>
         <canvas id="line-chart" class="chart"></canvas>
     </div>
@@ -93,7 +93,7 @@
     <div class="chart-card tooltip">
         <div class="chart-title">
             <img src="{% static 'images/d.png' %}" alt="Image" class="h-8 w-8"> Category Distribution
-            <span class="tooltiptext">Distribution of products across categories.</span>
+            {% comment %} <span class="tooltiptext">Distribution of products across categories.</span> {% endcomment %}
         </div>
         <canvas id="category-distribution-chart" class="chart"></canvas>
     </div>
@@ -102,7 +102,7 @@
     <div class="chart-card tooltip">
         <div class="chart-title">
             <img src="{% static 'images/d.png' %}" alt="Image" class="h-8 w-8"> Doughnut Chart
-            <span class="tooltiptext">Visual representation of categories.</span>
+            {% comment %} <span class="tooltiptext">Visual representation of categories.</span> {% endcomment %}
         </div>
         <canvas id="doughnut-chart" class="chart"></canvas>
     </div>
