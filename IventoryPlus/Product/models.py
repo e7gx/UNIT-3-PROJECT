@@ -1,6 +1,7 @@
 from django.db import models
 from Categories.models import Category
 from Suppliers.models import Supplier
+from django.utils import timezone
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -15,3 +16,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"{self.name} - {self.email}"

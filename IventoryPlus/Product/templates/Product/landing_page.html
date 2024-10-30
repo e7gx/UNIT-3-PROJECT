@@ -1,0 +1,229 @@
+{% extends 'Product/base.html' %}
+{% load static %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+
+
+  <style>
+    form {
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        background-color: rgba(17, 25, 40, 0.75);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.125);
+    }
+  </style>
+
+    <!-- Hero Section with Animation -->
+    <section class="bg-gradient-to-r from-blue-800 to-indigo-900  text-white py-20 h-[500px] relative overflow-hidden">
+      <div class="container mx-auto text-center relative z-10 flex flex-col justify-center items-center h-full">
+        <h2 class="text-5xl font-bold mb-4 animate__animated animate__fadeInDown">Welcome to Abdullah's Website</h2>
+        <p class="text-xl mb-8 animate__animated animate__fadeInUp animate__delay-1s">Sharing knowledge and experiences about coding, mobile development, and more.</p>
+        <button onclick="scrollToSection()" class="bg-white text-blue-800 font-semibold py-3 px-16 rounded-full shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 animate__animated animate__bounceIn animate__delay-2s">    <div class="absolute inset-0 bg-pattern opacity-10" style="background-image: url('{% static 'images/box.png' %}'); background-size: 10%;"></div>
+          Get Started</button>      </div>
+      <div class="absolute inset-0 bg-pattern opacity-10" style="background-image: url('{% static 'images/box.png' %}'); background-size: 10%;"></div>
+    </section>
+
+
+<!-- Timeline Section -->
+<section class="py-20 body">
+  <style>
+    /* Background styles */
+    .body {
+      background-color: #111927;
+      background-image: 
+      radial-gradient(at 99% 95%, hsl(220, 77%, 40%) 0, transparent 34%),
+          radial-gradient(at 21% 12%, hsl(180, 77%, 40%) 0, transparent 23%), 
+        radial-gradient(at 82% 65%, hsl(218.00, 39%, 11%) 0, transparent 34%);
+    }
+    /* Modern card effect */
+    .modern-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      transition: all 0.3s ease;
+    }
+    .modern-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+    }
+    .timeline-line {
+      width: 2px;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    .timeline-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #3498db;
+      border: 4px solid #111927;
+    }
+  </style>
+  <div class="container mx-auto px-4">
+    <h3 class="text-6xl font-bold text-center text-white mb-16 animate__animated animate__fadeInDown">My Journey</h3>
+    <div class="relative">
+      <div class="timeline-line absolute left-1/2 transform -translate-x-1/2 h-full"></div>
+
+      <!-- Timeline item 1 -->
+      <div class="mb-16 flex items-center">
+        <div class="w-1/2 px-4">
+          <div class="modern-card p-6 inline-block animate__animated animate__fadeInRight">
+            <h3 class="text-2xl font-bold text-white mb-3 text-center">Started With Computer Science Degree</h3>
+            <p class="text-gray-300">Began my journey into the world of programming with Python.</p>
+          </div>
+        </div>
+        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+
+      <!-- Timeline item 2 -->
+      <div class="mb-16 flex flex-row-reverse items-center">
+        <div class="w-1/2 px-4 text-right">
+          <div class="modern-card p-6 inline-block animate__animated animate__fadeInLeft">
+            <h3 class="text-2xl text-center font-bold text-white mb-3">Learned Django</h3>
+            <p class="text-gray-300">Mastered Django framework for building robust web applications.</p>
+          </div>
+        </div>
+        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+
+      <!-- Timeline item 3 -->
+      <div class="mb-16 flex items-center">
+        <div class="w-1/2 px-4">
+          <div class="modern-card p-6 inline-block animate__animated animate__fadeInRight">
+            <h3 class="text-2xl text-center font-bold text-white mb-3">Learned Flutter</h3>
+            <p class="text-gray-300">Expanded my skills into mobile app development with Flutter.</p>
+          </div>
+        </div>
+        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+
+      <!-- Timeline item 4 -->
+      <div class="mb-16 flex flex-row-reverse items-center">
+        <div class="w-1/2 px-4 text-right">
+          <div class="modern-card p-6 inline-block animate__animated animate__fadeInLeft">
+            <h3 class="text-2xl text-center font-bold text-white mb-3">Python Instructor at Tuwaiq Academy</h3>
+            <p class="text-gray-300">Teach Python to students to prepare them for the P-CEP exam.</p>
+          </div>
+        </div>
+        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+
+      <!-- Timeline item 5 -->
+      <div class="mb-16 flex items-center">
+        <div class="w-1/2 px-4">
+          <div class="modern-card p-6 inline-block animate__animated animate__fadeInRight">
+            <h3 class="text-2xl text-center font-bold text-white mb-3">Learned Flutter</h3>
+            <p class="text-gray-300">Expanded my skills into mobile app development with Flutter.</p>
+          </div>
+        </div>
+        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // Add animation to timeline items on scroll
+  const timelineItems = document.querySelectorAll('.modern-card');
+  const animateTimeline = () => {
+    timelineItems.forEach(item => {
+      const itemTop = item.getBoundingClientRect().top;
+      if (itemTop < window.innerHeight - 100) {
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }
+    });
+  };
+  window.addEventListener('scroll', animateTimeline);
+  animateTimeline(); // Initial check on page load
+</script>
+
+
+  
+  <!-- Blog Section with Hover Effects -->
+  <section id="blog" class="container mx-auto py-20" data-aos="fade-up">
+    <h3 class="text-4xl font-bold text-center text-blue-800 mb-12">Latest Messages</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {% for contact in contact_info %}
+      <div class="bg-white rounded-lg shadow-lg p-6 transition duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-2xl" data-aos="fade-up" data-aos-delay="100">
+        <img src="{% static 'images/background.png' %}" alt="Message Image" class="w-full h-48 object-cover rounded-t-lg mb-4">
+        <h4 class="text-2xl font-semibold text-blue-800 mb-4">{{ contact.name }}</h4>
+        <p class="text-gray-600 mb-4">{{ contact.message|truncatewords:20 }}</p>
+        <a href="#" class="text-blue-800 hover:text-blue-600 font-semibold transition duration-300 ease-in-out">Read More →</a>
+      </div>
+      {% empty %}
+      <div class="col-span-3 text-center text-gray-600">
+        No messages yet.
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+
+  <!-- Contact Form Section with Animation -->
+  <section class="bg-gray-100 py-20 relative" style="background-image: url('{% static 'images/done.webp' %}'); background-size: fill; background-position: center;">
+    <div class="container mx-auto relative z-10">
+      <h3 class="text-4xl font-bold text-center text-blue-800 mb-12">Contact Me</h3>
+      <form action="{% url 'Product:landing_page' %}" method="post" class="max-w-lg mx-auto bg-white bg-opacity-90 rounded-lg shadow-xl p-8 animate__animated animate__fadeInUp" style="backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); background-color: rgba(17, 25, 40, 0.75); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.125);">
+        {% csrf_token %}
+        <div class="mb-6">
+          <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" required />
+        </div>
+        <div class="mb-6">
+          <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+          <input type="email" id="email" name="email" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" required />
+        </div>
+        <div class="mb-6">
+          <label for="message" class="block text-gray-700 font-semibold mb-2">Message</label>
+          <textarea id="message" name="message" placeholder="Your Message" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" rows="4" required></textarea>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="bg-blue-800 text-white font-semibold py-3 px-16 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">Send Message</button>
+        </div>
+      </form>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+  </section>
+
+  <!-- JavaScript to Scroll to Blog Section -->
+  <script>
+    function scrollToSection() {
+      document.getElementById('blog').scrollIntoView({ behavior: 'smooth' })
+    }
+  </script>
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- AOS Library for scroll animations -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    })
+  </script>
+
+
+
+{% endblock %}

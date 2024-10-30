@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def dashboard(request):
-    print(request.user)
+    the_last_five_products = Product.objects.order_by('-created_at')[:5]
     total_products = Product.objects.count()
     total_suppliers = Supplier.objects.count()
     total_categories = Category.objects.count()
@@ -57,7 +57,8 @@ def dashboard(request):
         'total_products_data': json.dumps([trace.to_plotly_json() for trace in total_products_data]),
         'total_suppliers_data': json.dumps([trace.to_plotly_json() for trace in total_suppliers_data]),
         'category_labels': json.dumps(category_labels),
-        'category_values': json.dumps(category_values)
+        'category_values': json.dumps(category_values),
+        'last_five_products': the_last_five_products,
     }
 
     return render(request, 'Reports/dashboard.html', context)

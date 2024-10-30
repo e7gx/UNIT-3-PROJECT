@@ -4,8 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from Suppliers.models import Supplier
 from Categories.models import Category
-from .models import Product
-from .forms import ProductForm
+from .models import Product, Contact
+from .forms import ProductForm, ContactForm
 from django.contrib import messages
 from tempfile import NamedTemporaryFile
 from openpyxl import Workbook
@@ -15,7 +15,30 @@ from django.utils.dateparse import parse_datetime, parse_date
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-@login_required
+
+
+
+def landing_page(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        if name and email and message:
+            Contact.objects.create(name=name, email=email, message=message)
+            messages.success(request, "Your message has been sent successfully!")
+            return redirect('Product:thanks')
+        else:
+            messages.error(request, "Please fill out all fields.")
+    
+    contact_info = Contact.objects.all().order_by('-id')[:3]
+    context = {
+        'contact_info': contact_info
+    }
+
+    
+    return render(request, 'Product/landing_page.html', context)
+
 def thanksPage(request:HttpResponse):
     return render(request,'Product/thanks_page.html')
 
